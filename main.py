@@ -3,5 +3,4 @@ import os
 
 pdfToolObj = pdfTool()
 inputFilePath = input("Enter file path:").strip('"')
-pdfTool.splitPdf(inputFilePath)
-
+pdfToolObj.splitPdf(inputFilePath, splitAt="6")
