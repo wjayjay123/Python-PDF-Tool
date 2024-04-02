@@ -23,6 +23,7 @@ class pdfTool:
                         pdfWriter.add_page(pdfReader.pages[idx])
                         with open(f"{outputFolderPath}\{fileName}_{idx+1}.pdf", 'wb') as output:
                             pdfWriter.write(output)
+
                 # Split from specified page till the end
                 elif(splitAt is not None):
                         pdfWriter = PyPDF2.PdfWriter()
@@ -38,5 +39,16 @@ class pdfTool:
                             pdfWriter.add_page(pdfReader.pages[idx])
                         with open(f"{outputFolderPath}\{fileName}_{int(splitAt)+1}-{numPages}.pdf", 'wb') as output:
                             pdfWriter.write(output)
+                elif(selectPage is not None):
+                    if len(selectPage) != 0:
+                        pdfWriter = PyPDF2.PdfWriter()
+                        # First page to specified page
+                        for pages in selectPage:
+                            pdfWriter.add_page(pdfReader.pages[int(pages)-1])
+                        with open(f"{outputFolderPath}\{fileName}_SelectedPages.pdf", 'wb') as output:
+                            pdfWriter.write(output)
+                else:
+                    print("Error")
+
         else:
             print("Error, invalid file.")
