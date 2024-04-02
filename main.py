@@ -1,5 +1,7 @@
-from pdfTool import pdfTool 
+from pdfTool import pdfTool
+from tkinter import filedialog
 import os
+import tkinter as tk
 
 
 def menu():
@@ -25,11 +27,15 @@ while True:
         splitOption = input("->").lower()
 
         if splitOption == "1" or splitOption == "all":
-            inputFilePath = input("Enter file path:").strip('"')
+            win = tk.Tk()
+            inputFilePath = filedialog.askopenfilename()
+            win.destroy()
             pdfToolObj.splitPdf(inputFilePath)
 
         elif splitOption == "2" or splitOption == "split":
-            inputFilePath = input("Enter file path:").strip('"')
+            win = tk.Tk()
+            inputFilePath = filedialog.askopenfilename()
+            win.destroy()
             splitPage = input("Enter page number:")
             try:
                 pdfToolObj.splitPdf(inputFilePath, splitAt=splitPage)
@@ -37,7 +43,9 @@ while True:
                 print("Invalid file or page number.\n")
 
         elif splitOption == "3" or splitOption == "select":
-            inputFilePath = input("Enter file path:").strip('"')
+            win = tk.Tk()
+            inputFilePath = filedialog.askopenfilename()
+            win.destroy()
             selectPage = input("Enter pages (e.g. 1,3,5 or 1-5):")
             if "," in selectPage:
                 pages = selectPage.split(",")
@@ -63,7 +71,21 @@ while True:
             print("Invalid option.\n")
 
     elif option == "2" or option == "merge":
-        pass
+        inputFilePath = None
+        multiFilePaths = []
+        while inputFilePath != "":
+            win = tk.Tk()
+            inputFilePath = filedialog.askopenfilename()
+            win.destroy()
+            if inputFilePath != "":
+                multiFilePaths.append(inputFilePath)
+        try:
+            pdfToolObj.mergePDF(multiFilePaths)
+        except:
+            print("Invalid files.\n")
+        
+
+
     elif option == "3" or option == "exit":
         print("Exiting program.\n")
         break

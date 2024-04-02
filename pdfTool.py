@@ -52,3 +52,10 @@ class pdfTool:
 
         else:
             print("Error, invalid file.")
+
+    def mergePDF(self, multiFilePaths):
+        pdfMerger = PyPDF2.PdfMerger()
+        for file in multiFilePaths:
+            if os.path.exists(file) and os.path.basename(file).endswith(".pdf"):
+                pdfMerger.append(file)
+        pdfMerger.write("mergedFiles.pdf")
